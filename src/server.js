@@ -4,7 +4,9 @@ const express = () => {
 };
 // const express = require("express")
 let app = express();
-const path = require("path")
+
+const path = require("path");
+const users = require("./assets/user.json")
 
 // Code here
 app.get("/",(req,res)=>{
@@ -15,7 +17,25 @@ app.get("/",(req,res)=>{
       }
 })
 
-console.log("dir",__dirname)
+app.get("/users",(req,res)=>{
+    try {      
+        return res.status(200).sendFile(path.join(__dirname,'/assets/user.json'))
+      } catch (err) {
+        return res.status(500).send({ message: err.message });
+      }
+})
+app.get("/users/:id",(req,res)=>{
+    let id = req.params.id;
+    let user = users.filter((el)=> {return (el.id === id)} )
+    console.log(id,user)
+    try {      
+        return res.status(200).send(user)
+      } catch (err) {
+        return res.status(500).send({ message: err.message });
+      }
+})
+
+
 app.listen(8000,()=>{
     try{
         console.log("listening on port 8000!")
