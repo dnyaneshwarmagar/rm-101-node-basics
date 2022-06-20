@@ -11,7 +11,7 @@ const path = require("path");
 const users = require("./assets/user.json")
 const fs = require("fs");
 var data = require("./assets/user.json");
-console.log(data)
+// console.log(data)
 
 // Code here
 app.get("/", (req, res) => {
@@ -32,7 +32,7 @@ app.get("/users", (req, res) => {
 app.get("/users/:id", (req, res) => {
     let id = req.params.id;
     let user = users.filter((el) => el.id == id)
-    // console.log(id,user)
+    // console.log(typeof id)
     try {
         return res.status(200).send(user[0])
     } catch (err) {
