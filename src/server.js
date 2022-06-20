@@ -26,10 +26,17 @@ app.get("/users",(req,res)=>{
 })
 app.get("/users/:id",(req,res)=>{
     let id = req.params.id;
-    let user = users.filter((el)=> {return (el.id === id)} )
-    console.log(id,user)
+    let user = users.filter((el)=> el.id == id )
+    // console.log(id,user)
     try {      
-        return res.status(200).send(user)
+        return res.status(200).send(user[0])
+      } catch (err) {
+        return res.status(500).send({ message: err.message });
+      }
+})
+app.post("/users",(req,res)=>{
+    try {      
+        return res.status(200).sendFile(path.join(__dirname,'/assets/user.json'))
       } catch (err) {
         return res.status(500).send({ message: err.message });
       }
